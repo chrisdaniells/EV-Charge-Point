@@ -25,12 +25,12 @@ const styles = StyleSheet.create({
 });
 
 export default function HomeScreen() {
-    const [chargePointData, setChargePointData] = useState([]);
+    const [chargePointData, setChargePointData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedChargePointId, setSelectedChargePointId] = useState(null);
 
     function handlePostcodeInputButtonPress(postcode) {
-        setChargePointData([]);
+        setChargePointData(null);
         setSelectedChargePointId(null);
         setIsLoading(true);
 
@@ -76,7 +76,11 @@ export default function HomeScreen() {
                 <Text>Loading...</Text>
             }
 
-            { chargePointData.length > 0 &&
+            { chargePointData && chargePointData.length === 0 &&
+                <Text>No Results</Text>
+            }
+
+            { chargePointData && chargePointData.length > 0 &&
                 <ResultList
                     items={chargePointData}
                     onItemSelect={handleChargePointItemSelect}
