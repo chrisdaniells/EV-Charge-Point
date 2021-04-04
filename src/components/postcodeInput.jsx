@@ -13,10 +13,14 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 10,
         borderBottomColor: '#ccc',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        fontSize: 20
     },
     buttonContainer: {
-        marginBottom: 10
+        marginBottom: 10,
+    },
+    button: {
+        fontSize: 20
     }
 });
 

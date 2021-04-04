@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import {
-    SafeAreaView,
+    Platform,
+    ScrollView,
+    StatusBar,
     StyleSheet,
     Text
 } from 'react-native';
@@ -17,16 +19,19 @@ import ResultList from '../components/resultList';
 
 const styles = StyleSheet.create({
     container: {
-        margin: 10
+        margin: 10,
+        marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
     }
 });
 
 export default function HomeScreen() {
     const [chargePointData, setChargePointData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedChargePointId, setSelectedChargePointId] = useState(null)
+    const [selectedChargePointId, setSelectedChargePointId] = useState(null);
 
     function handlePostcodeInputButtonPress(postcode) {
+        setChargePointData([]);
+        setSelectedChargePointId(null);
         setIsLoading(true);
 
         PostcodeApi.fetchPostcodeCoords(postcode)
@@ -64,7 +69,7 @@ export default function HomeScreen() {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container}>
             <PostcodeInput onButtonPress={handlePostcodeInputButtonPress} />
 
             { isLoading &&
@@ -78,6 +83,6 @@ export default function HomeScreen() {
                     selectedItemId={selectedChargePointId}
                 />
             }
-        </SafeAreaView>
+        </ScrollView>
     );
 }
