@@ -1,0 +1,1 @@
+export const POSTCODE_API_PATH = 'https://api.postcodes.io/postcodes/';
