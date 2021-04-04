@@ -1,14 +1,30 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import {
+    SafeAreaView,
+    StyleSheet,
+    Text
+} from 'react-native';
 
-import { PostcodeApi, OpenChargeMapApi } from '../apis';
+import {
+    PostcodeApi,
+    OpenChargeMapApi,
+    EVEnergyApi
+} from '../apis';
 
 import PostcodeInput from '../components/postcodeInput';
 import ResultList from '../components/resultList';
 
+
+const styles = StyleSheet.create({
+    container: {
+        margin: 10
+    }
+});
+
 export default function HomeScreen() {
     const [chargePointData, setChargePointData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedChargePointId, setSelectedChargePointId] = useState(null)
 
     function handlePostcodeInputButtonPress(postcode) {
         setIsLoading(true);
@@ -19,13 +35,12 @@ export default function HomeScreen() {
                 OpenChargeMapApi.fetchPublicChargers(longitude, latitude)
                     .then(data => {
                         setIsLoading(false);
-                        console.log(data);
                         setChargePointData(
                             data.map(item => ({
                                 title: item.AddressInfo.Title,
                                 town: item.AddressInfo.Town,
                                 postcode: item.AddressInfo.Postcode,
-                                distance: item.AddressInfo.Distance,
+                                distance: item.AddressInfo.Distance.toFixed(2),
                                 chargerId: item.ID
                             }))
                         );
@@ -41,8 +56,15 @@ export default function HomeScreen() {
             });
     }
 
+    function handleChargePointItemSelect(chargerId) {
+        EVEnergyApi.startChargingSession(chargerId)
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
+            .finally(() => setSelectedChargePointId(chargerId));
+    }
+
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <PostcodeInput onButtonPress={handlePostcodeInputButtonPress} />
 
             { isLoading &&
@@ -50,7 +72,11 @@ export default function HomeScreen() {
             }
 
             { chargePointData.length > 0 &&
-                <ResultList items={chargePointData} />
+                <ResultList
+                    items={chargePointData}
+                    onItemSelect={handleChargePointItemSelect}
+                    selectedItemId={selectedChargePointId}
+                />
             }
         </SafeAreaView>
     );

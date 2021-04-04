@@ -14,9 +14,7 @@ export default class PostcodeApi {
                     longitude: json.result.longitude,
                     latitude: json.result.latitude
                 }))
-                .catch(error => {
-                    reject(error);
-                });
+                .catch(error => reject(error));
         });
     }
 }
