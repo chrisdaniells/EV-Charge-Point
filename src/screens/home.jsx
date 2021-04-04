@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+    Keyboard,
     Platform,
     ScrollView,
     StatusBar,
@@ -30,6 +31,7 @@ export default function HomeScreen() {
     const [selectedChargePointId, setSelectedChargePointId] = useState(null);
 
     function handlePostcodeInputButtonPress(postcode) {
+        Keyboard.dismiss();
         setChargePointData(null);
         setSelectedChargePointId(null);
         setIsLoading(true);
@@ -69,7 +71,7 @@ export default function HomeScreen() {
     }
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps='handled'>
             <PostcodeInput onButtonPress={handlePostcodeInputButtonPress} />
 
             { isLoading &&
