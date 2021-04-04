@@ -7,7 +7,7 @@ import {
     TextInput
 } from 'react-native';
 
-export default PostcodeInput = (onButtonPress) => {
+export default function PostcodeInput({ onButtonPress }) {
     const [postcode, setPostcode] = useState('');
 
     return (
@@ -27,5 +27,5 @@ export default PostcodeInput = (onButtonPress) => {
 };
 
 PostcodeInput.propTypes = {
-    handleButtonPress: PropTypes.func
+    onButtonPress: PropTypes.func
 };

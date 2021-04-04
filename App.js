@@ -1,17 +1,13 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import PostcodeApi from './src/apis/postcode';
+import HomeScreen from './src/screens/home';
 
 export default function App() {
-  const [postcode, setPostcode] = useState({});
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <HomeScreen />
   );
 }
 
