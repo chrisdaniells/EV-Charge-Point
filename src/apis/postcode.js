@@ -1,4 +1,4 @@
-import { POSTCODE_API_PATH } from '../config/paths';
+import { POSTCODE_API_PATH } from '../config';
 
 export default class PostcodeApi {
     static fetchPostcodeCoords = (postcode) => {

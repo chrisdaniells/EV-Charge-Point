@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Button,
@@ -21,6 +21,7 @@ export default function PostcodeInput({ onButtonPress }) {
                 onPress={() => onButtonPress(postcode)}
                 title='Search'
                 accessibilityLabel='Search for nearby charge points'
+                disabled={postcode.length < 5}
             />
         </SafeAreaView>
     );

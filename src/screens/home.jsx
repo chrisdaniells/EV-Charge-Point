@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
 
-import PostcodeApi from '../apis/postcode';
+import { PostcodeApi, OpenChargeMapApi } from '../apis';
 
 import PostcodeInput from '../components/postcodeInput';
 
 export default function HomeScreen() {
     function handlePostcodeInputButtonPress(postcode) {
         PostcodeApi.fetchPostcodeCoords(postcode)
-            .then(data => {
-                // Call OpenChargeMapApi
-                console.log(data);
+            .then(coords => {
+                const { longitude, latitude } = coords;
+                OpenChargeMapApi.fetchPublicChargers(longitude, latitude)
+                    .then(data => console.log(data))
+                    .catch(err => console.log(err));
             })
             .catch(error => console.log(error));
     }
@@ -19,5 +21,5 @@ export default function HomeScreen() {
         <SafeAreaView>
             <PostcodeInput onButtonPress={handlePostcodeInputButtonPress} />
         </SafeAreaView>
-    )
+    );
 }
